@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if object_list %}
+        <div class="col-12">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Is Active?</th>
+                    <th scope="col">View</th>
+                    <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in object_list %}
+                <tr>
+                    <td>{{ row.project_name }}</td>
+                    <td>{{ row.project_description }}</td>
+                    <td>{{ row.start_date }}</td>
+                    <td>
+                        {% if row.end_date is None %}
+                            -
+                        {% else %}
+                            {{ row.end_date }}
+                        {% endif %}
+                    </td>
+                    {%  if row.isactive == 1 %}
+                        <td>Yes</td>
+                    {% else %}
+                        <td>No</td>
+                    {% endif %}
+                    <td><a href="{% url 'project_view' row.id %}"><button type="button" class="btn btn-outline-primary btn-sm">View</button></a></td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+            There are no projects, yet. But if you want, you can add from <a class="badge badge-info" href="{% url 'product_new' %}"><strong>here.</strong></a>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}

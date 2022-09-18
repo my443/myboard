@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="my-4">Detail -
+        <small>{{ object.project_name }}</small>
+    </h1>
+    <div class="row">
+        <div class="col-12">
+            <ul class="list-group">
+              <li class="list-group-item"><strong>Project Name:</strong> {{ object.project_name }}</li>
+              <li class="list-group-item"><strong>Project Description:</strong> {{ object.project_description }}</li>
+              <li class="list-group-item"><strong>Is Active?</strong> {{ object.isactive }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-12">
+                <a href="{% url 'project_edit' object.id %}"><button type="button" class="btn btn-success">Edit</button></a>
+                <a href="{% url 'project_list' %}"><button type="button" class="btn btn-secondary">Back</button></a>
+        </div>
+    </div>
+{% endblock %}
