@@ -26,6 +26,12 @@ class ProjectUpdate(SuccessMessageMixin, UpdateView):
     form_class = ProjectForm
     template_name = 'project_form.html'
     success_url = reverse_lazy('project_list')
-    success_message = "Product successfully updated!"
+    success_message = "Project successfully updated!"
+
+class ProjectDelete(SuccessMessageMixin, DeleteView):
+    model = Project
+    template_name = 'project_confirm_delete.html'
+    success_url = reverse_lazy('project_list')
+    success_message = "Project successfully deleted!"
 
 
