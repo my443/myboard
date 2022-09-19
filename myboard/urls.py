@@ -6,6 +6,6 @@ urlpatterns = [
     path('view/<int:pk>', views.ProjectDetail.as_view(), name='project_view'),
     path('edit/<int:pk>', views.ProjectUpdate.as_view(), name='project_edit'),
     path('delete/<int:pk>', views.ProjectDelete.as_view(), name='project_delete'),
-    # path('new', views.ProductCreate.as_view(), name='product_new'),
+    path('new', views.ProjectCreate.as_view(), name='project_new'),
 
 ]
