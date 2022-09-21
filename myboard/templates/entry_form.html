@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="my-4">{% if request.path == '/myboard/new-entry' %} New Project {% else %} Edit - {% endif %}
+        {% if request.path != '/myboard/new-entry' %}<small>{{ project.project_name }}</small>{% endif %}
+    </h1>
+    <div class="row">
+        <div class="col-12">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <input type="submit" {% if request.path == '/myboard/new-entry' %} value="Add" {% else %} value="Update" {% endif %} class="btn btn-success"/>
+                <a href="{% url 'project_list' %}"><button type="button" class="btn btn-secondary">Back</button></a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

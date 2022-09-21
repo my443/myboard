@@ -8,10 +8,16 @@ class Project(models.Model):
   end_date = models.DateField(null=True, blank=True)
   isactive = models.BooleanField()
 
+  def __str__(self):
+    return self.project_name
+
 class Category(models.Model):
   category_name = models.CharField(max_length=280)
   category_description = models.TextField(null=True, blank=True)
   isactive = models.BooleanField()
+
+  def __str__(self):
+    return self.category_name
 
 class Entry(models.Model):
   category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -20,3 +26,4 @@ class Entry(models.Model):
   rate = models.DecimalField(max_digits=7, decimal_places=2)
   dollars = models.DecimalField(max_digits=11, decimal_places=2)
   record_date = models.DateField()
+

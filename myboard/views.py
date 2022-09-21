@@ -6,8 +6,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.utils import timezone                   ## For the new entry with a startday of NOW
 
-from .models import Project, Category
-from .forms import ProjectForm, CategoryForm
+from .models import Project, Category, Entry
+from .forms import ProjectForm, CategoryForm, EntryForm
 
 
 # Create your views here.
@@ -43,8 +43,8 @@ class ProjectCreate(SuccessMessageMixin, CreateView):
     success_message = "Project successfully created!"
 
     ## Found a solution for setting a default date without having to have it on the form.
-    ## start_date is a not-null field, but it can be filled in without entering the form value.
-    ## https://stackoverflow.com/questions/19051830/a-better-way-of-setting-values-in-createview
+    ##      start_date is a not-null field, but it can be filled in without entering the form value.
+    ##      https://stackoverflow.com/questions/19051830/a-better-way-of-setting-values-in-createview
     def form_valid(self, form):
         obj = form.save(commit=False)
         # obj.user = self.request.user
@@ -58,3 +58,16 @@ class CategoryCreate(SuccessMessageMixin, CreateView):
     template_name = 'category_form.html'
     success_url = reverse_lazy('project_list')
     success_message = "Category successfully created!"
+
+class EntryCreate(SuccessMessageMixin, CreateView):
+    model = Entry
+    form_class = EntryForm
+    template_name = 'entry_form.html'
+    success_url = reverse_lazy('project_list')
+    success_message = "Entry successfully created!"
+
+class EntryDelete(SuccessMessageMixin, DeleteView):
+    model = Entry
+    template_name = 'entry_confirm_delete.html'
+    success_url = reverse_lazy('project_list')
+    success_message = "Entry successfully deleted!"

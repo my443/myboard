@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from .models import Project, Category
+from .models import Project, Category, Entry
 
 class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -14,8 +14,7 @@ class ProjectForm(forms.ModelForm):
         }
         self.fields['isactive'].widget.attrs = {
             'class': 'form-control col-md-6',
-            'step': 'any',
-            'min': '1',
+            'checked': ''
         }
 
     class Meta:
@@ -33,10 +32,36 @@ class CategoryForm(forms.ModelForm):
         }
         self.fields['isactive'].widget.attrs = {
             'class': 'form-control col-md-6',
-            'step': 'any',
-            'min': '1',
+            'checked': ''
         }
 
     class Meta:
         model = Category
         fields = ('category_name', 'category_description', 'isactive')
+
+class EntryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EntryForm, self).__init__(*args, **kwargs)
+        self.fields['category'].widget.attrs = {
+            'class': 'form-control col-md-6'
+        }
+        self.fields['project'].widget.attrs = {
+            'class': 'form-control col-md-6'
+        }
+        self.fields['hours'].widget.attrs = {
+            'class': 'form-control col-md-6'
+        }
+        self.fields['rate'].widget.attrs = {
+            'class': 'form-control col-md-6'
+        }
+        self.fields['dollars'].widget.attrs = {
+            'class': 'form-control col-md-6'
+        }
+        self.fields['record_date'].widget.attrs = {
+            'class': 'form-control col-md-6'
+        }
+
+
+    class Meta:
+        model = Entry
+        fields = ('category', 'project', 'hours', 'rate', 'dollars', 'record_date')
