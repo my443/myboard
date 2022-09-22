@@ -59,15 +59,39 @@ class CategoryCreate(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('project_list')
     success_message = "Category successfully created!"
 
+class CategoryUpdate(SuccessMessageMixin, UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'category_form.html'
+    success_url = reverse_lazy('project_list')
+    success_message = "Project successfully updated!"
+
+class CategoryDelete(SuccessMessageMixin, DeleteView):
+    model = Category
+    template_name = 'category_confirm_delete.html'
+    success_url = reverse_lazy('project_list')
+    success_message = "Category successfully deleted!"
+
+class EntryList(ListView):
+    model = Entry
+    template_name= 'entry_list.html'
+
 class EntryCreate(SuccessMessageMixin, CreateView):
     model = Entry
     form_class = EntryForm
     template_name = 'entry_form.html'
-    success_url = reverse_lazy('project_list')
+    success_url = reverse_lazy('entry_list')
     success_message = "Entry successfully created!"
+
+class EntryUpdate(SuccessMessageMixin, UpdateView):
+    model = Entry
+    form_class = EntryForm
+    template_name = 'entry_form.html'
+    success_url = reverse_lazy('entry_list')
+    success_message = "Project successfully updated!"
 
 class EntryDelete(SuccessMessageMixin, DeleteView):
     model = Entry
     template_name = 'entry_confirm_delete.html'
-    success_url = reverse_lazy('project_list')
+    success_url = reverse_lazy('entry_list')
     success_message = "Entry successfully deleted!"

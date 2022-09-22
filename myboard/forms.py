@@ -14,7 +14,7 @@ class ProjectForm(forms.ModelForm):
         }
         self.fields['isactive'].widget.attrs = {
             'class': 'form-control col-md-6',
-            'checked': ''
+            ## 'checked': ''
         }
 
     class Meta:
@@ -32,7 +32,7 @@ class CategoryForm(forms.ModelForm):
         }
         self.fields['isactive'].widget.attrs = {
             'class': 'form-control col-md-6',
-            'checked': ''
+            ## 'checked': ''
         }
 
     class Meta:

@@ -12,8 +12,12 @@ urlpatterns = [
 
     ## Category List
     path('new-category', views.CategoryCreate.as_view(), name='category_new'),
+    path('edit-category/<int:pk>', views.CategoryUpdate.as_view(), name='category_edit'),
+    path('delete-category/<int:pk>', views.CategoryDelete.as_view(), name='category_delete'),
 
     ## Entries
+    path('list-entries', views.EntryList.as_view(), name='entry_list'),
     path('new-entry', views.EntryCreate.as_view(), name='entry_new'),
+    path('edit-entry/<int:pk>', views.EntryUpdate.as_view(), name='entry_edit'),
     path('delete-entry/<int:pk>', views.EntryDelete.as_view(), name='entry_delete'),
 ]

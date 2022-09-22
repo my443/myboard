@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if object_list %}
+        <div class="col-12">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+
+                    <th scope="col">Category</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Hours</th>
+                    <th scope="col">Rate</th>
+                    <th scope="col">Dollars</th>
+                    <th scope="col">Entry Date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in object_list %}
+                <tr>
+                    <td>{{ row.category }}</td>
+                    <td>{{ row.project }}</td>
+                    <td>{{ row.hours }}</td>
+                    <td>{{ row.rate }}</td>
+                    <td>{{ row.dollars }}</td>
+                    <td>{{ row.record_date }}</td>
+                    <td><a href="{% url 'entry_edit' row.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Edit</button></a></td>
+                    <td><a href="{% url 'entry_delete' row.id %}"><button type="button" class="btn btn-outline-danger btn-sm">Delete</button></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+            There are no projects, yet. But if you want, you can add from <a class="badge badge-info" href="{% url 'project_new' %}"><strong>here.</strong></a>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}
