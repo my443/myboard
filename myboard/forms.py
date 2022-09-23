@@ -40,6 +40,12 @@ class CategoryForm(forms.ModelForm):
         fields = ('category_name', 'category_description', 'isactive')
 
 class DateInput(forms.DateInput):
+    """
+    This is to make a date-picker appear in the EntryForm
+    https://stackoverflow.com/questions/3367091/whats-the-cleanest-simplest-to-get-running-datepicker-in-django
+
+    This is used in the Meta Class of EntryForm
+    """
     input_type = 'date'
 
 class EntryForm(forms.ModelForm):
@@ -63,7 +69,6 @@ class EntryForm(forms.ModelForm):
         self.fields['record_date'].widget.attrs = {
             'class': 'form-control col-md-6'
         }
-
 
     class Meta:
         model = Entry

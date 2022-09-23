@@ -14,6 +14,9 @@ from .forms import ProjectForm, CategoryForm, EntryForm
 class AboutView(TemplateView):
     template_name = "about.html"
 
+class DashboardView(TemplateView):
+    template_name = "dashboard_view.html"
+
 class ProjectList(ListView):
     model = Project
     template_name= 'project_list.html'
