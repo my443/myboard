@@ -11,6 +11,7 @@ urlpatterns = [
     path('new-project', views.ProjectCreate.as_view(), name='project_new'),
 
     ## Category List
+    path('list-categories', views.CategoryList.as_view(), name='category_list'),
     path('new-category', views.CategoryCreate.as_view(), name='category_new'),
     path('edit-category/<int:pk>', views.CategoryUpdate.as_view(), name='category_edit'),
     path('delete-category/<int:pk>', views.CategoryDelete.as_view(), name='category_delete'),

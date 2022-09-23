@@ -39,6 +39,9 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ('category_name', 'category_description', 'isactive')
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class EntryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EntryForm, self).__init__(*args, **kwargs)
@@ -65,3 +68,6 @@ class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         fields = ('category', 'project', 'hours', 'rate', 'dollars', 'record_date')
+        widgets = {
+            'record_date': DateInput(),
+        }
