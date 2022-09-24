@@ -6,8 +6,13 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.utils import timezone                   ## For the new entry with a startday of NOW
 
+from django.db.models import DecimalField
+from django.db.models import Sum, Avg
+
 from .models import Project, Category, Entry
 from .forms import ProjectForm, CategoryForm, EntryForm
+
+
 
 
 # Create your views here.
@@ -15,7 +20,12 @@ class AboutView(TemplateView):
     template_name = "about.html"
 
 class DashboardView(TemplateView):
+    model = Entry
     template_name = "dashboard_view.html"
+
+    hours = Entry.objects.all().aggregate(Sum('hours'))
+
+    extra_context = {'extra': {'a': '1', 'b': '2'}, 'hours':hours['hours__sum']}
 
 class ProjectList(ListView):
     model = Project
