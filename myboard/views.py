@@ -23,7 +23,7 @@ class DashboardView(TemplateView):
     model = Entry
     template_name = "dashboard_view.html"
 
-    hours = Entry.objects.all().aggregate(Sum('hours'))
+    hours = Entry.objects.filter(category__exact=8).aggregate(Sum('hours'))
 
     extra_context = {'extra': {'a': '1', 'b': '2'}, 'hours':hours['hours__sum']}
 

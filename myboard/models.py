@@ -14,7 +14,7 @@ class Project(models.Model):
 class Category(models.Model):
   category_name = models.CharField(max_length=280)
   category_description = models.TextField(null=True, blank=True)
-  isactive = models.BooleanField()
+  isactive = models.BooleanField(default=True)
 
   def __str__(self):
     return self.category_name
