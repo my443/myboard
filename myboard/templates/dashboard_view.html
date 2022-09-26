@@ -32,19 +32,20 @@
                 {% for field in extra %}
         {{ field }}
     {% endfor %}
-            <h1>Time</h1>
+            <h1>Time {{ view.year }}</h1>
+
             <div class="row">
                 <div class="col-md-3">
                     <h5 class="text-center">Total Time Available</h5>
-                    <h1 class="text-center">160 hrs</h1>
+                    <h1 class="text-center">{{ available_hours }} hrs</h1>
                 </div>
                 <div class="col-md-3">
                     <h5 class="text-center">Billable Hours</h5>
-                    <h1 class="text-center">{{ hours }} hrs</h1>
+                    <h1 class="text-center">{{ billable_hours }} hrs</h1>
                 </div>
                 <div class="col-md-3">
                     <h5 class="text-center">Bid Hours</h5>
-                    <h1 class="text-center">50 hrs</h1>
+                    <h1 class="text-center">{{ bid_hours }} hrs</h1>
                 </div>
                 <div class="col">
                     <h5 class="text-center">Hours Gap</h5>
@@ -65,14 +66,14 @@
                 </div>
                 <div class="col-md-3">
                     <h5 class="text-center">Bid (Planned Revenue)</h5>
-                    <h1 class="text-center">$5,000<br></h1>
+                    <h1 class="text-center">${{ billable_revenue  }}<br></h1>
                 </div>
                 <div class="col-md-3">
                     <h5>-</h5>
                 </div>
                 <div class="col">
                     <h5 class="text-center">Projected Revenue</h5>
-                    <h1 class="text-center">$15,000<br></h1>
+                    <h1 class="text-center">${{ bid_revenue }}<br></h1>
                 </div>
                 <div class="w-100"></div>
                 <div class="col">
@@ -85,11 +86,11 @@
             <div class="row">
                 <div class="col-md-3">
                     <h5 class="text-center">Firm Hours</h5>
-                    <h1 class="text-center">$8,000<br></h1>
+                    <h1 class="text-center">${{ firm_hours }}<br></h1>
                 </div>
                 <div class="col-md-3">
                     <h5 class="text-center">Outsourced Hours</h5>
-                    <h1 class="text-center">$7,000<br></h1>
+                    <h1 class="text-center">${{ outsourced_hours }}<br></h1>
                 </div>
                 <div class="col-md-3">
                     <h5>-</h5>

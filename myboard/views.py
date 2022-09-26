@@ -23,9 +23,27 @@ class DashboardView(TemplateView):
     model = Entry
     template_name = "dashboard_view.html"
 
-    hours = Entry.objects.filter(category__exact=8).aggregate(Sum('hours'))
+    available_hours = Entry.objects.filter(category__exact = 7).aggregate(Sum('hours'))
+    billable_hours = Entry.objects.filter(category__exact=8).aggregate(Sum('hours'))
+    bid_hours = Entry.objects.filter(category__exact=9).aggregate(Sum('hours'))
 
-    extra_context = {'extra': {'a': '1', 'b': '2'}, 'hours':hours['hours__sum']}
+    billable_revenue = Entry.objects.filter(category__exact=8).aggregate(Sum('dollars'))
+    bid_revenue = Entry.objects.filter(category__exact=8).aggregate(Sum('dollars'))
+
+    firm_hours = Entry.objects.filter(category__exact=10).aggregate(Sum('hours'))
+    outsourced_hours = Entry.objects.filter(category__exact=11).aggregate(Sum('hours'))
+
+
+    extra_context = {
+                     'available_hours' : available_hours['hours__sum'],
+                     'billable_hours' : billable_hours['hours__sum'],
+                     'bid_hours' : bid_hours['hours__sum'],
+                     'billable_revenue' : "{:,}".format(billable_revenue['dollars__sum']),
+                     'bid_revenue' : bid_revenue['dollars__sum'],
+                     'firm_hours' : firm_hours['hours__sum'],
+                     'outsourced_hours' : outsourced_hours['hours__sum'],}
+
+
 
 class ProjectList(ListView):
     model = Project
