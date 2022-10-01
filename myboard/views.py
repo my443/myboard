@@ -15,8 +15,7 @@ from django.db.models import Sum, Avg
 from .models import Project, Category, Entry
 from .forms import ProjectForm, CategoryForm, EntryForm
 
-
-
+import datetime
 
 # Create your views here.
 class AboutView(TemplateView):
@@ -31,7 +30,20 @@ def get_board1(request):
 def get_board(request):
     # model = Entry
 
-    year = request.GET.get('year', '')
+    current_year = datetime.datetime.today()
+
+    # Use request.GET.get to get the parametre from the url /?year=2022
+    # year = request.GET.get('year', '')
+    # year = request.POST.get('year', '')
+
+    # Either get the posted year or the current year.
+    year = request.POST.get('year', str(current_year.year))
+
+    # You have to use getlist if you are selecting more than one item
+    month = request.POST.getlist('month')
+    print ('Month', month)
+
+    possible_years = ['2021', '2022', '2023', '2024', '2025', '2026', '2027']
 
     available_hours     = Entry.objects.filter(category__exact = 7).aggregate(Sum('hours'))
     billable_hours      = Entry.objects.filter(category__exact=8).aggregate(Sum('hours'))
@@ -51,7 +63,9 @@ def get_board(request):
                      'bid_revenue'      : bid_revenue['dollars__sum'],
                      'firm_hours'       : firm_hours['hours__sum'],
                      'outsourced_hours' : outsourced_hours['hours__sum'],
-                     'year'             : year}
+                     'year'             : year,
+                     'possible_years'   : possible_years,
+                     'month'            : month}
 
     return render(request, 'dashboard_view.html', context)
 

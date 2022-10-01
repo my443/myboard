@@ -28,25 +28,44 @@
 
 
     <main class="page lanidng-page">
+    <div class="float-left">
+            <form method="post" action="">
+                {% csrf_token %}
+
+            <select id="year" name="year" style="width:100%">
+
+            {% for year_for_select in possible_years %}
+                {{ year_for_select }} {{ year }}
+                <option value={{ year_for_select }} {% if year_for_select == year %} selected {% endif %}>{{ year_for_select }}</option>
+            {% endfor %}
+            </select>
+
+                <select id="month" name = "month" multiple="multiple" style="width:100%" size="12">
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="4">May</option>
+                  <option value="4">June</option>
+                  <option value="3">July</option>
+                  <option value="4">August</option>
+                  <option value="4">September</option>
+                  <option value="4">October</option>
+                  <option value="3">November</option>
+                  <option value="4">December</option>
+                </select>
+                <input type="submit" value="Update" style="width:100%" />
+            </form>
+    </div>
         <div class="container">
                 {% for field in extra %}
         {{ field }}
     {% endfor %}
 
 
-            <form method="post">
-                {% csrf_token %}
-<select id="item">
-  <option value="1">Volvo</option>
-  <option value="2">Saab</option>
-  <option value="3">Opel</option>
-  <option value="4">Audi</option>
-</select>
-                <input type="submit" {% if request.path == '/myboard/new-entry' %} value="Add" {% else %} value="Update" {% endif %} class="btn btn-success"/>
 
-            </form>
 
-            <h1>Time {{ year }} {{ views.year }}</h1>
+            <h1>Time {{ year }} {{ views.year }} {{ views.month }}</h1>
 
             <div class="row">
                 <div class="col-md-3">
