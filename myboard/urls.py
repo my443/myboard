@@ -1,9 +1,10 @@
-from django.urls import path
+from django.urls import path,include, re_path
 from . import views
 
 urlpatterns = [
 
-    path('', views.DashboardView.as_view()),
+    # path('', views.DashboardView.as_view()),
+    path('', views.get_board),
 
     ## Project List
     path('list', views.ProjectList.as_view(), name='project_list'),

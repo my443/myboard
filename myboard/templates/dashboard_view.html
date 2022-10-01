@@ -32,7 +32,21 @@
                 {% for field in extra %}
         {{ field }}
     {% endfor %}
-            <h1>Time {{ view.year }}</h1>
+
+
+            <form method="post">
+                {% csrf_token %}
+<select id="item">
+  <option value="1">Volvo</option>
+  <option value="2">Saab</option>
+  <option value="3">Opel</option>
+  <option value="4">Audi</option>
+</select>
+                <input type="submit" {% if request.path == '/myboard/new-entry' %} value="Add" {% else %} value="Update" {% endif %} class="btn btn-success"/>
+
+            </form>
+
+            <h1>Time {{ year }} {{ views.year }}</h1>
 
             <div class="row">
                 <div class="col-md-3">

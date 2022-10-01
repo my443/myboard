@@ -6,6 +6,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.utils import timezone                   ## For the new entry with a startday of NOW
 
+from django.shortcuts import render
+from django.http import HttpResponse, request
+
 from django.db.models import DecimalField
 from django.db.models import Sum, Avg
 
@@ -19,9 +22,45 @@ from .forms import ProjectForm, CategoryForm, EntryForm
 class AboutView(TemplateView):
     template_name = "about.html"
 
+def get_board1(request):
+    # model = Entry
+
+    year = request.GET.get('year', '')
+    return HttpResponse(year)
+
+def get_board(request):
+    # model = Entry
+
+    year = request.GET.get('year', '')
+
+    available_hours     = Entry.objects.filter(category__exact = 7).aggregate(Sum('hours'))
+    billable_hours      = Entry.objects.filter(category__exact=8).aggregate(Sum('hours'))
+    bid_hours           = Entry.objects.filter(category__exact=9).aggregate(Sum('hours'))
+
+    billable_revenue    = Entry.objects.filter(category__exact=8).aggregate(Sum('dollars'))
+    bid_revenue         = Entry.objects.filter(category__exact=8).aggregate(Sum('dollars'))
+
+    firm_hours          = Entry.objects.filter(category__exact=10).aggregate(Sum('hours'))
+    outsourced_hours    = Entry.objects.filter(category__exact=11).aggregate(Sum('hours'))
+
+    context = {
+                     'available_hours'  : available_hours['hours__sum'],
+                     'billable_hours'   : billable_hours['hours__sum'],
+                     'bid_hours'        : bid_hours['hours__sum'],
+                     'billable_revenue' : "{:,}".format(billable_revenue['dollars__sum']),
+                     'bid_revenue'      : bid_revenue['dollars__sum'],
+                     'firm_hours'       : firm_hours['hours__sum'],
+                     'outsourced_hours' : outsourced_hours['hours__sum'],
+                     'year'             : year}
+
+    return render(request, 'dashboard_view.html', context)
+
 class DashboardView(TemplateView):
     model = Entry
+    year = ''
+
     template_name = "dashboard_view.html"
+
 
     available_hours = Entry.objects.filter(category__exact = 7).aggregate(Sum('hours'))
     billable_hours = Entry.objects.filter(category__exact=8).aggregate(Sum('hours'))
@@ -33,6 +72,15 @@ class DashboardView(TemplateView):
     firm_hours = Entry.objects.filter(category__exact=10).aggregate(Sum('hours'))
     outsourced_hours = Entry.objects.filter(category__exact=11).aggregate(Sum('hours'))
 
+    def dispatch(self, request, *args, **kwargs):
+        year = request.GET.get('year', '')
+        return super(DashboardView, self).dispatch(request, *args, **kwargs)
+
+    # def get_context_data(self, **kwargs):
+    #     # Call the base implementation first to get a context
+    #     context = super().get_context_data(**kwargs)
+    #     context['year'] = self.year
+    #     return context
 
     extra_context = {
                      'available_hours' : available_hours['hours__sum'],
@@ -41,8 +89,8 @@ class DashboardView(TemplateView):
                      'billable_revenue' : "{:,}".format(billable_revenue['dollars__sum']),
                      'bid_revenue' : bid_revenue['dollars__sum'],
                      'firm_hours' : firm_hours['hours__sum'],
-                     'outsourced_hours' : outsourced_hours['hours__sum'],}
-
+                     'outsourced_hours' : outsourced_hours['hours__sum'],
+                     'year'             : year}
 
 
 class ProjectList(ListView):
