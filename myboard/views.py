@@ -30,17 +30,24 @@ def get_board1(request):
 def get_board(request):
     # model = Entry
 
-    current_year = datetime.datetime.today()
+    current_date = datetime.datetime.today()
+    current_year = current_date.year
+    current_month = current_date.month
 
     # Use request.GET.get to get the parametre from the url /?year=2022
     # year = request.GET.get('year', '')
     # year = request.POST.get('year', '')
 
     # Either get the posted year or the current year.
-    year = request.POST.get('year', str(current_year.year))
+    year = request.POST.get('year', str(current_year))
 
     # You have to use getlist if you are selecting more than one item
     month = request.POST.getlist('month')
+
+    # If there is no month selected, selected the current month.
+    if not month:
+        month = [str(current_month)]
+
     print ('Month', month)
 
     possible_years = ['2021', '2022', '2023', '2024', '2025', '2026', '2027']
