@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{% static 'assets/fonts/ionicons.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+
+
 </head>
 
 <body>
@@ -27,8 +29,8 @@
     </nav>
 
 
-    <main class="page lanidng-page">
-    <div class="float-left">
+    <main class="page landing-page">
+    <div class="float-left" id="navigation">
             <form method="post" action="">
                 {% csrf_token %}
 
@@ -54,9 +56,17 @@
                   <option value="11" {% if "11" in month %} selected {% endif %}>November</option>
                   <option value="12" {% if "12" in month %} selected {% endif %}>December</option>
                 </select>
-                <input type="submit" value="Update" style="width:100%" />
+                <input type="submit" value="Update Filter" style="width:100%" />
             </form>
+<div style="text-align: center"><br>
+         <p><a class="btn btn-outline-success btn-md" href="{% url 'project_list' %}">List Projects</a></p>
+         <p><a class="btn btn-outline-success btn-md" href="{% url 'entry_list' %}">List Entries</a></p>
+         <p><a class="btn btn-outline-success btn-md" href="{% url 'category_list' %}">List Categories</a></p>
+
     </div>
+
+    </div>
+             <p><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"><b>...</b></button></p>
         <div class="container">
                 {% for field in extra %}
         {{ field }}
@@ -146,6 +156,12 @@
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
+
+    <script>
+        $("#sidebarToggle").click(function(){
+          $("#navigation").toggle();
+        });
+    </script>
 </body>
 
 </html>
